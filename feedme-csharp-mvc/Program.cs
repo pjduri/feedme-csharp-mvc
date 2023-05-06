@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = "server=localhost;user=feedmev2;password=feedmev2;database=feedme-v2";
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
 
 var app = builder.Build();
 
