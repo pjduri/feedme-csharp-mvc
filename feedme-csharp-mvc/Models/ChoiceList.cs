@@ -3,15 +3,15 @@
     public class ChoiceList
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<Option> Options { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public List<Option>? Options { get; set; }
 
         public ChoiceList()
         {
         }
 
-        public ChoiceList(string name, string description, List<Option> options)
+        public ChoiceList(string name, string description, List<Option>? options) : this()
         {
             Name = name;
             Description = description;

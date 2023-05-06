@@ -5,11 +5,14 @@
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public int ChoiceListId { get; set; }
+        public ChoiceList ChoiceList { get; set; }
+
         public Option()
         {
         }
 
-        public Option(string name)
+        public Option(string name) : this()
         {
             Name = name;
         }

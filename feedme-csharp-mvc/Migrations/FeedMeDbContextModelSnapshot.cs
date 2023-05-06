@@ -26,11 +26,9 @@ namespace feedme_csharp_mvc.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -44,7 +42,7 @@ namespace feedme_csharp_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChoiceListId")
+                    b.Property<int>("ChoiceListId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -256,9 +254,13 @@ namespace feedme_csharp_mvc.Migrations
 
             modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
                 {
-                    b.HasOne("feedme_csharp_mvc.Models.ChoiceList", null)
+                    b.HasOne("feedme_csharp_mvc.Models.ChoiceList", "ChoiceList")
                         .WithMany("Options")
-                        .HasForeignKey("ChoiceListId");
+                        .HasForeignKey("ChoiceListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChoiceList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
