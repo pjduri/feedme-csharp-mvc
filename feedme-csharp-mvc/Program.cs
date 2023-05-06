@@ -1,3 +1,4 @@
+using feedme_csharp_mvc.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = "server=localhost;user=feedmev2;password=feedmev2;database=feedme-v2";
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+
+builder.Services.AddDbContext<FeedMeDbContext>(dbContextOptions => dbContextOptions.UseMySql(connectionString, serverVersion));
 
 var app = builder.Build();
 
