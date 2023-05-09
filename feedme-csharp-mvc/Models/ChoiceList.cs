@@ -5,17 +5,22 @@
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public List<Option>? Options { get; set; }
+        public List<ListOption>? Options { get; set; }
+
+        public void AddOption(ListOption option)
+        {
+            Options.Add(option);
+        }
 
         public ChoiceList()
         {
         }
 
-        public ChoiceList(string name, string description, List<Option>? options) : this()
+        public ChoiceList(string name, string description) : this()
         {
             Name = name;
             Description = description;
-            Options = options;
+            Options = new List<ListOption>();
         }
 
         public override bool Equals(object? obj)

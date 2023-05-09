@@ -1,25 +1,29 @@
-﻿namespace feedme_csharp_mvc.Models
+﻿
+
+using System.ComponentModel.DataAnnotations;
+
+namespace feedme_csharp_mvc.Models
 {
-    public class Option
+    public class ListOption
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public int ChoiceListId { get; set; }
-        public ChoiceList ChoiceList { get; set; }
+        public ChoiceList? ChoiceList { get; set; }
 
-        public Option()
+        public ListOption()
         {
         }
 
-        public Option(string name) : this()
+        public ListOption(string name) : this()
         {
             Name = name;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Option option &&
+            return obj is ListOption option &&
                    Id == option.Id;
         }
 
