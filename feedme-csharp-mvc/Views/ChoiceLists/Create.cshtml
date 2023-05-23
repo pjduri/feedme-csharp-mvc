@@ -1,4 +1,4 @@
-﻿@model feedme_csharp_mvc.Models.ChoiceList
+﻿@model feedme_csharp_mvc.ViewModels.AddChoiceListViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -22,6 +22,16 @@
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Option1Name" class="control-label"></label>
+                <input asp-for="Option1Name" class="form-control" />
+                <span asp-validation-for="Option1Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Option2Name" class="control-label"></label>
+                <input asp-for="Option2Name" class="form-control" />
+                <span asp-validation-for="Option2Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

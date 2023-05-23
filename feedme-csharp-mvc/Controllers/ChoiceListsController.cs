@@ -59,15 +59,29 @@ namespace feedme_csharp_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] ChoiceList choiceList)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description, Option1Name, Option2Name")] AddChoiceListViewModel addChoiceListViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(choiceList);
+                ListOption option1 = new ListOption(addChoiceListViewModel.Option1Name);
+                ListOption option2 = new ListOption(addChoiceListViewModel.Option2Name);
+
+                ChoiceList choiceList = new ChoiceList
+                {
+                    Name = addChoiceListViewModel.Name,
+                    Description = addChoiceListViewModel.Description,
+                    Options = new List<ListOption>
+                    {
+                        option1,
+                        option2
+                    }
+                };
+
+                _context.choiceLists.Add(choiceList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(choiceList);
+            return View(addChoiceListViewModel);
         }
 
         // GET: ChoiceLists/Edit/5

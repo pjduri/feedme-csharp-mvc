@@ -12,8 +12,21 @@ namespace feedme_csharp_mvc.ViewModels
         [StringLength(255, ErrorMessage = "Character limit exceeded")]
         public string? Description { get; set; }
 
+        [Required(ErrorMessage = "Must start with at least two options")]
+        public string? Option1Name { get; set; }
+
+        [Required(ErrorMessage = "Must start with at least two options")]
+        public string? Option2Name { get; set; }
+
+        public List<ListOption> Options { get; set; }
+
         public AddChoiceListViewModel()
         {
+            Options = new List<ListOption>();
         }
+
+        //public AddChoiceListViewModel()
+        //{
+        //}
     }
 }
