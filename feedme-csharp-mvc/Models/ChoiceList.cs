@@ -7,9 +7,12 @@
         public string? Description { get; set; }
         public List<ListOption>? Options { get; set; }
 
-        public void AddOption(ListOption option)
+        public void AddOption(ListOption? option)
         {
-            Options.Add(option);
+            if (option is not null)
+            {
+                Options.Add(option);
+            }
         }
 
         public ChoiceList()

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using feedme_csharp_mvc.Data;
 using feedme_csharp_mvc.Models;
+using feedme_csharp_mvc.ViewModels;
 
 namespace feedme_csharp_mvc.Controllers
 {
@@ -36,6 +37,7 @@ namespace feedme_csharp_mvc.Controllers
             }
 
             var choiceList = await _context.choiceLists
+                .Include(cl => cl.Options)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (choiceList == null)
             {
@@ -48,7 +50,8 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ChoiceLists/Create
         public IActionResult Create()
         {
-            return View();
+            //AddChoiceListViewModel addChoiceListViewModel = new AddChoiceListViewModel();
+            return View(/*addChoiceListViewModel*/);
         }
 
         // POST: ChoiceLists/Create

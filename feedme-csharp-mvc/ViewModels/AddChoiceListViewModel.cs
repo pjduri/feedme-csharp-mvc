@@ -1,7 +1,7 @@
 ﻿using feedme_csharp_mvc.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace feedme_csharp_mvc
+namespace feedme_csharp_mvc.ViewModels
 {
     public class AddChoiceListViewModel
     {

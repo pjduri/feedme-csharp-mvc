@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using feedme_csharp_mvc.Data;
 using feedme_csharp_mvc.Models;
 using Microsoft.AspNetCore.Authorization;
+using feedme_csharp_mvc.ViewModels;
 
 namespace feedme_csharp_mvc.Controllers
 {
@@ -49,8 +50,9 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ListOptions/Create
         public IActionResult Create()
         {
-            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id");
-            return View();
+            //ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id");
+            AddOptionViewModel addOptionViewModel = new AddOptionViewModel(_context.choiceLists.ToList());
+            return View(addOptionViewModel);
         }
 
         // POST: ListOptions/Create
@@ -58,16 +60,26 @@ namespace feedme_csharp_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ChoiceListId")] ListOption listOption)
+        public async Task<IActionResult> Create([Bind("Id,Name,ChoiceListId")] /*ListOption listOption,*/ AddOptionViewModel addOptionViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(listOption);
+                ChoiceList? theChoiceList = await _context.choiceLists.FindAsync(addOptionViewModel.ChoiceListId);
+                ListOption listOption = new ListOption
+                {
+                    Name = addOptionViewModel.Name,
+                    ChoiceList = theChoiceList
+                };
+
+                theChoiceList.Options ??= new List<ListOption>();
+
+                theChoiceList.Options.Add(listOption);
+                _context.options.Add(listOption);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id", listOption.ChoiceListId);
-            return View(listOption);
+            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id", addOptionViewModel.ChoiceListId);
+            return View(addOptionViewModel);
         }
 
         // GET: ListOptions/Edit/5

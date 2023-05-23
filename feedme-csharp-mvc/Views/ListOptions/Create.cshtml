@@ -1,4 +1,4 @@
-﻿@model feedme_csharp_mvc.Models.ListOption
+﻿@*@model feedme_csharp_mvc.Models.ListOption
 
 @{
     ViewData["Title"] = "Create";
@@ -22,6 +22,48 @@
                 <label asp-for="ChoiceListId" class="control-label"></label>
                 <select asp-for="ChoiceListId" class ="form-control" asp-items="ViewBag.ChoiceListId"></select>
             </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
+
+@model feedme_csharp_mvc.ViewModels.AddOptionViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>ListOption</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @if (Model.ChoiceLists != null && Model.ChoiceLists.Count > 0)
+            {
+            <div class="form-group">
+                    <label asp-for="ChoiceListId" class="control-label"></label>
+                <select asp-for="ChoiceListId" class ="form-control" asp-items="@Model.ChoiceLists"></select>
+            </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
