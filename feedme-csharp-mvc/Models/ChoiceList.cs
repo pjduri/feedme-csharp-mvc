@@ -1,4 +1,6 @@
-﻿namespace feedme_csharp_mvc.Models
+﻿using Microsoft.Extensions.Options;
+
+namespace feedme_csharp_mvc.Models
 {
     public class ChoiceList
     {
@@ -7,12 +9,16 @@
         public string? Description { get; set; }
         public List<ListOption>? Options { get; set; }
 
-        public void AddOption(ListOption? option)
+        public ListOption GetRandomOption()
         {
-            if (option is not null)
-            {
-                Options.Add(option);
-            }
+            // Generate a random index
+            var random = new Random();
+            var randomIndex = random.Next(0, Options.Count);
+
+            // Retrieve the randomly selected option
+            ListOption randomOption = Options[randomIndex];
+
+            return randomOption;
         }
 
         public ChoiceList()

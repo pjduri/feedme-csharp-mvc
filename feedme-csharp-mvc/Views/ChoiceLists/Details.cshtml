@@ -1,4 +1,6 @@
-﻿@using feedme_csharp_mvc.Models
+﻿@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@using feedme_csharp_mvc.Models
 @model ChoiceList
 
 @{
@@ -36,10 +38,69 @@
         }
         </td>
     </tr>
-
 </table>
     <hr />
-@*    <dl class="row">
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+    <h3 id="randomOption"><a asp-controller="ListOptions" asp-action="Details" asp-route-id="@Model.GetRandomOption().Id">Pick Me Something!</a></h3>
+</div>
+
+@*
+    <script type="text/javascript">
+        const button = document.querySelector('input[name=randomizer]');
+        const random = document.getElementById("randomOption");
+
+        random.innerHTML = "Click the button";
+        const randList = []
+
+        randList.push('Hi')
+        randList.push('Hello')
+        randList.push('Hola')
+        randList.push('Konichiwa')
+
+        // Parse the serialized JSON in JavaScript
+        const randList = JSON.parse('@Html.Raw(Model.Options)');
+        random.innerHTML = randList[0]
+
+        function pickOne() {
+            random.innerHTML = randList[2]
+        }
+        //button.addEventListener('click', e => {
+        //    random.innerHTML = randList[0];
+        //});
+    </script>*@
+
+
+
+@*<script>
+    const button = document.getElementById("pickRandom");
+    const random = document.getElementById("randomOption");
+    const randList = [];
+    
+    random.innerHTML = "click the button";
+
+    randList[0] = @Model.Options[0];
+    randList[1] = @Model.Options[1];
+
+    function getRandom() {
+        random.innerHTML = Math.floor(Math.Random() * randList.length);
+    }
+
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+            @*    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -53,8 +114,3 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>*@
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
