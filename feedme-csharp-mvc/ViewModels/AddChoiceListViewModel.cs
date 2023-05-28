@@ -18,7 +18,7 @@ namespace feedme_csharp_mvc.ViewModels
         [Required(ErrorMessage = "Must start with at least two options")]
         public string? Option2Name { get; set; }
 
-        public List<ListOption> Options { get; set; }
+        public List<ListOption>? Options { get; set; }
 
         public AddChoiceListViewModel()
         {

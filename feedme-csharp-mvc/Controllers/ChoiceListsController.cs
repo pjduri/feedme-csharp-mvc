@@ -25,7 +25,7 @@ namespace feedme_csharp_mvc.Controllers
         {
             return _context.ChoiceLists != null ?
                         View(await _context.ChoiceLists.ToListAsync()) :
-                        Problem("Entity set 'FeedMeDbContext.choiceLists'  is null.");
+                        Problem("Entity set 'FeedMeDbContext.ChoiceLists'  is null.");
         }
 
         // GET: ChoiceLists/Details/5
@@ -36,7 +36,7 @@ namespace feedme_csharp_mvc.Controllers
                 return NotFound();
             }
 
-            ChoiceList choiceList = _context.ChoiceLists
+            ChoiceList? choiceList = _context.ChoiceLists
                 .Include(cl => cl.Options)
                 .FirstOrDefault(c => c.Id == id);
 
