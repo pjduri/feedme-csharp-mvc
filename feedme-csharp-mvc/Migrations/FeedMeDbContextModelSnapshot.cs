@@ -36,7 +36,7 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("choiceLists");
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,6 @@ namespace feedme_csharp_mvc.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -252,7 +251,7 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.HasOne("feedme_csharp_mvc.Models.ChoiceList", "ChoiceList")
                         .WithMany("Options")

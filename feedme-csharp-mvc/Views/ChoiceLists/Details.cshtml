@@ -1,0 +1,71 @@
+﻿@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@using feedme_csharp_mvc.ViewModels
+@model ChoiceListDetailViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Model.Name</h4>
+    <table class="table">
+    <tr>
+        <th>Name</th>
+        <td>@Model.ChoiceListName</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>@Model.ChoiceListDescription</td>
+    </tr>
+    <tr>
+        <th>Options</th>
+        <td>
+        @if (Model.OptionNames != null && Model.OptionNames.Count > 0) 
+        {
+            <ul>
+            @foreach (string option in Model.OptionNames)
+            {
+                <li>@option</li>
+            }
+            </ul>
+        }
+        </td>
+    </tr>
+</table>
+    <hr />
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<button id="randomOptionButton">Pick Me Something!</button>
+<button id="clearButton">Clear</button>
+<div id="randomOptionContainer"></div>
+
+<script>
+  const button = document.getElementById('randomOptionButton')
+  const clearButton = document.getElementById('clearButton')
+  const container = document.getElementById('randomOptionContainer')
+  const optionsJson = '@Html.Raw(Json.Serialize(Model.OptionNames))'
+  const options = JSON.parse(optionsJson)
+  let randomOption
+  clearButton.hidden = true
+
+  button.addEventListener('click', () => {
+    const randomIndex = Math.floor(Math.random() * options.length)
+    randomOption = options[randomIndex]
+    container.textContent = randomOption
+    clearButton.hidden = false
+  })
+
+  clearButton.addEventListener('click', () => {
+      randomOption = null
+      container.textContent = randomOption
+      clearButton.hidden = true
+  })
+</script>

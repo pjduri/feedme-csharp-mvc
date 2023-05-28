@@ -11,8 +11,8 @@ using feedme_csharp_mvc.Data;
 namespace feedme_csharp_mvc.Migrations
 {
     [DbContext(typeof(FeedMeDbContext))]
-    [Migration("20230506192625_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230523042226_NotInitialMigration")]
+    partial class NotInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,7 +38,7 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("choiceLists");
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,6 @@ namespace feedme_csharp_mvc.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -254,7 +253,7 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.HasOne("feedme_csharp_mvc.Models.ChoiceList", "ChoiceList")
                         .WithMany("Options")
