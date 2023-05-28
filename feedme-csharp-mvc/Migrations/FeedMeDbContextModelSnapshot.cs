@@ -26,11 +26,9 @@ namespace feedme_csharp_mvc.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -38,17 +36,16 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("choiceLists");
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChoiceListId")
+                    b.Property<int>("ChoiceListId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -254,11 +251,15 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("feedme_csharp_mvc.Models.Option", b =>
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
-                    b.HasOne("feedme_csharp_mvc.Models.ChoiceList", null)
+                    b.HasOne("feedme_csharp_mvc.Models.ChoiceList", "ChoiceList")
                         .WithMany("Options")
-                        .HasForeignKey("ChoiceListId");
+                        .HasForeignKey("ChoiceListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChoiceList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
