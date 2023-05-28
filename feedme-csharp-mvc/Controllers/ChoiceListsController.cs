@@ -50,24 +50,6 @@ namespace feedme_csharp_mvc.Controllers
             return View(viewModel);
         }
 
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.choiceLists == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var choiceList = await _context.choiceLists
-        //        .Include(cl => cl.Options)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (choiceList == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(choiceList);
-        //}
-
         // GET: ChoiceLists/Create
         public IActionResult Create()
         {

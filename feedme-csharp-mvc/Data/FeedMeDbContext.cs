@@ -18,6 +18,10 @@ namespace feedme_csharp_mvc.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ChoiceListLayout>()
+                .HasMany(c => c.ChoiceLists)
+                .WithOne(op => op.ChoiceListLayout);
+            
             modelBuilder.Entity<ChoiceList>()
                 .HasMany(c => c.Options)
                 .WithOne(op => op.ChoiceList);
