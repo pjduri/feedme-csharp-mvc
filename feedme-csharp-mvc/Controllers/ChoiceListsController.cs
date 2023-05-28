@@ -29,38 +29,44 @@ namespace feedme_csharp_mvc.Controllers
         }
 
         // GET: ChoiceLists/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null || _context.choiceLists == null)
             {
                 return NotFound();
             }
 
-            var choiceList = await _context.choiceLists
+            ChoiceList choiceList = _context.choiceLists
                 .Include(cl => cl.Options)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefault(c => c.Id == id);
+
             if (choiceList == null)
             {
                 return NotFound();
             }
 
-            //var options = choiceList.Options;
+            ChoiceListDetailViewModel viewModel = new ChoiceListDetailViewModel(choiceList);
 
-            //if (options.Count == 0)
-            //{
-            //    return NoContent();
-            //}
-
-            //// Generate a random index
-            //var random = new Random();
-            //var randomIndex = random.Next(0, options.Count);
-
-            //// Retrieve the randomly selected option
-            //ViewBag.randomOption = options[randomIndex];
-
-            //ChoiceListDetailViewModel choiceListDetailViewModel = new(choiceList);
-            return View(choiceList);
+            return View(viewModel);
         }
+
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.choiceLists == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var choiceList = await _context.choiceLists
+        //        .Include(cl => cl.Options)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (choiceList == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(choiceList);
+        //}
 
         // GET: ChoiceLists/Create
         public IActionResult Create()
