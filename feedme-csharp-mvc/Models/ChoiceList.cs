@@ -1,18 +1,27 @@
-﻿namespace feedme_csharp_mvc.Models
+﻿using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
+
+namespace feedme_csharp_mvc.Models
 {
     public class ChoiceList
     {
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+
+        [JsonIgnore]
         public List<ListOption>? Options { get; set; }
 
-        public void AddOption(ListOption? option)
+        public ListOption GetRandomOption()
         {
-            if (option is not null)
-            {
-                Options.Add(option);
-            }
+            // Generate a random index
+            var random = new Random();
+            var randomIndex = random.Next(0, Options.Count);
+
+            // Retrieve the randomly selected option
+            ListOption randomOption = Options[randomIndex];
+
+            return randomOption;
         }
 
         public ChoiceList()
