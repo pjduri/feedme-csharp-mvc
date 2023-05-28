@@ -23,20 +23,20 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ChoiceLists
         public async Task<IActionResult> Index()
         {
-            return _context.choiceLists != null ?
-                        View(await _context.choiceLists.ToListAsync()) :
+            return _context.ChoiceLists != null ?
+                        View(await _context.ChoiceLists.ToListAsync()) :
                         Problem("Entity set 'FeedMeDbContext.choiceLists'  is null.");
         }
 
         // GET: ChoiceLists/Details/5
         public IActionResult Details(int? id)
         {
-            if (id == null || _context.choiceLists == null)
+            if (id == null || _context.ChoiceLists == null)
             {
                 return NotFound();
             }
 
-            ChoiceList choiceList = _context.choiceLists
+            ChoiceList choiceList = _context.ChoiceLists
                 .Include(cl => cl.Options)
                 .FirstOrDefault(c => c.Id == id);
 
@@ -80,7 +80,7 @@ namespace feedme_csharp_mvc.Controllers
                     }
                 };
 
-                _context.choiceLists.Add(choiceList);
+                _context.ChoiceLists.Add(choiceList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -91,7 +91,7 @@ namespace feedme_csharp_mvc.Controllers
         public IActionResult GetRandomOption(int id)
         {
             // Retrieve the ChoiceList from the database based on the provided id
-            var choiceList = _context.choiceLists.FirstOrDefault(c => c.Id == id);
+            var choiceList = _context.ChoiceLists.FirstOrDefault(c => c.Id == id);
 
             if (choiceList == null)
             {
@@ -148,12 +148,12 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ChoiceLists/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.choiceLists == null)
+            if (id == null || _context.ChoiceLists == null)
             {
                 return NotFound();
             }
 
-            var choiceList = await _context.choiceLists.FindAsync(id);
+            var choiceList = await _context.ChoiceLists.FindAsync(id);
             if (choiceList == null)
             {
                 return NotFound();
@@ -199,12 +199,12 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ChoiceLists/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.choiceLists == null)
+            if (id == null || _context.ChoiceLists == null)
             {
                 return NotFound();
             }
 
-            var choiceList = await _context.choiceLists
+            var choiceList = await _context.ChoiceLists
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (choiceList == null)
             {
@@ -219,14 +219,14 @@ namespace feedme_csharp_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.choiceLists == null)
+            if (_context.ChoiceLists == null)
             {
                 return Problem("Entity set 'FeedMeDbContext.choiceLists'  is null.");
             }
-            var choiceList = await _context.choiceLists.FindAsync(id);
+            var choiceList = await _context.ChoiceLists.FindAsync(id);
             if (choiceList != null)
             {
-                _context.choiceLists.Remove(choiceList);
+                _context.ChoiceLists.Remove(choiceList);
             }
             
             await _context.SaveChangesAsync();
@@ -235,7 +235,7 @@ namespace feedme_csharp_mvc.Controllers
 
         private bool ChoiceListExists(int id)
         {
-          return (_context.choiceLists?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.ChoiceLists?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

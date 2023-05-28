@@ -38,7 +38,7 @@ namespace feedme_csharp_mvc.Migrations
 
                     b.HasIndex("ChoiceListLayoutId");
 
-                    b.ToTable("choiceLists");
+                    b.ToTable("ChoiceLists");
                 });
 
             modelBuilder.Entity("feedme_csharp_mvc.Models.ChoiceListLayout", b =>
@@ -55,7 +55,7 @@ namespace feedme_csharp_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChoiceListLayout");
+                    b.ToTable("ChoiceListLayouts");
                 });
 
             modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
@@ -74,7 +74,7 @@ namespace feedme_csharp_mvc.Migrations
 
                     b.HasIndex("ChoiceListId");
 
-                    b.ToTable("options");
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
