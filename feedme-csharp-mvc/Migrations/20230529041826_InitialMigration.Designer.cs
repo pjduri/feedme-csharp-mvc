@@ -11,8 +11,8 @@ using feedme_csharp_mvc.Data;
 namespace feedme_csharp_mvc.Migrations
 {
     [DbContext(typeof(FeedMeDbContext))]
-    [Migration("20230528204606_FullModelStructureMigration")]
-    partial class FullModelStructureMigration
+    [Migration("20230529041826_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

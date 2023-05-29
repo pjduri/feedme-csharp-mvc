@@ -20,12 +20,14 @@ namespace feedme_csharp_mvc.Models
         {
         }
 
-        public ChoiceList(string name, string description) : this()
+        public ChoiceList(string? name, string? description) : this()
         {
             Name = name;
             Description = description;
             Options = new List<ListOption>();
         }
+
+
 
         public override bool Equals(object? obj)
         {

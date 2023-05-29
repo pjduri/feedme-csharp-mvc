@@ -49,11 +49,32 @@ namespace feedme_csharp_mvc.Controllers
 
             return View(viewModel);
         }
+        
+        public IActionResult DetailsPartial(int? id)
+        {
+            if (id == null || _context.ChoiceLists == null)
+            {
+                return NotFound();
+            }
+
+            ChoiceList? choiceList = _context.ChoiceLists
+                .Include(cl => cl.Options)
+                .FirstOrDefault(c => c.Id == id);
+
+            if (choiceList == null)
+            {
+                return NotFound();
+            }
+
+            ChoiceListDetailViewModel viewModel = new ChoiceListDetailViewModel(choiceList);
+
+            return PartialView("../Views/Shared/_ChoiceListDetailPartial", viewModel);
+        }
 
         // GET: ChoiceLists/Create
         public IActionResult Create()
         {
-            AddChoiceListViewModel addChoiceListViewModel = new AddChoiceListViewModel();
+            AddChoiceListViewModel addChoiceListViewModel = new AddChoiceListViewModel(_context.ChoiceListLayouts.ToList());
             return View(addChoiceListViewModel);
         }
 
@@ -62,12 +83,14 @@ namespace feedme_csharp_mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description, Option1Name, Option2Name")] AddChoiceListViewModel addChoiceListViewModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description, Option1Name, Option2Name, ChoiceListLayoutId")] AddChoiceListViewModel addChoiceListViewModel)
         {
             if (ModelState.IsValid)
             {
                 ListOption option1 = new ListOption(addChoiceListViewModel.Option1Name);
                 ListOption option2 = new ListOption(addChoiceListViewModel.Option2Name);
+
+                ChoiceListLayout? listLayout = await _context.ChoiceListLayouts.FindAsync(addChoiceListViewModel.ChoiceListLayoutId);
 
                 ChoiceList choiceList = new ChoiceList
                 {
@@ -77,13 +100,20 @@ namespace feedme_csharp_mvc.Controllers
                     {
                         option1,
                         option2
-                    }
+                    },
+                    ChoiceListLayout = listLayout
                 };
+
+                listLayout.ChoiceLists ??= new List<ChoiceList>();
+
+                listLayout.ChoiceLists.Add(choiceList);
 
                 _context.ChoiceLists.Add(choiceList);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return Json(new { success = true });
+                return Redirect("Index");
             }
+            //return NoContent();
             return View(addChoiceListViewModel);
         }
 

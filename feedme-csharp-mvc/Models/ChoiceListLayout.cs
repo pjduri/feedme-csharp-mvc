@@ -7,6 +7,7 @@ namespace feedme_csharp_mvc.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+
         [JsonIgnore]
         public List<ChoiceList>? ChoiceLists { get; set; }
 
@@ -14,11 +15,10 @@ namespace feedme_csharp_mvc.Models
         {
         }
 
-        public ChoiceListLayout(string? name, string? description, List<ChoiceList>? choiceLists) : this()
+        public ChoiceListLayout(string? name, string? description) : this()
         {
             Name = name;
             Description = description;
-            ChoiceLists = new List<ChoiceList>();
         }
 
         public override bool Equals(object? obj)

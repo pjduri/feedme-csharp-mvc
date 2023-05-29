@@ -60,7 +60,7 @@
             @if (Model.ChoiceLists != null && Model.ChoiceLists.Count > 0)
             {
             <div class="form-group">
-                    <label asp-for="ChoiceListId" class="control-label"></label>
+                <label asp-for="ChoiceListId" class="control-label"></label>
                 <select asp-for="ChoiceListId" class ="form-control" asp-items="@Model.ChoiceLists"></select>
             </div>
             }

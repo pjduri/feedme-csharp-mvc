@@ -1,0 +1,17 @@
+﻿@using feedme_csharp_mvc.ViewModels
+@model ListLayoutDetailViewModel
+
+<h1>@Model.Name</h1>
+<h4>Description: </h4>
+<p>@Model.Description</p>
+<a asp-controller="ChoiceLists" asp-action="Create">Add more lists</a>
+
+@if(Model.ChoiceLists != null && Model.ChoiceLists.Count > 0) {
+    <ul>
+    @foreach(ChoiceList choiceList in Model.ChoiceLists) {
+        <li>
+            <a asp-controller="ChoiceLists" asp-action="Details" asp-route-id="@choiceList.Id" >@choiceList.Name</a>
+        </li>
+    }
+    </ul>
+}

@@ -1,0 +1,77 @@
+﻿@using feedme_csharp_mvc.Models
+@model List<ChoiceListLayout>
+
+<h2>Your Layouts</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="container">
+@foreach(ChoiceListLayout listLayout in @Model)
+{
+    <div class="col-3">
+        <table class="table-bordered table-hover">
+            <tr>
+                <th>@listLayout.Name</th>
+            </tr>
+            <tr>
+                <td>@listLayout.Description</td>
+            </tr>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@listLayout.Id">Details</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+}
+</div>
+
+@*<h2>Your Layouts</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="col-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name: </th>
+                <th>Description: </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(ChoiceListLayout listLayout in @Model)
+            {
+                <tr>
+                    <td>@listLayout.Name</td>
+                    <td>@listLayout.Description</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@listLayout.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@
+
+
+
+@*                    <td>
+                        <ul>
+                            @if (listLayout.ChoiceLists != null && listLayout.ChoiceLists.Count > 0)
+                            {
+                                @foreach (ChoiceList choiceList in listLayout.ChoiceLists)
+                                {
+                                    <li>
+                                        <p>
+                                            <a asp-controller="ChoiceLists" asp-action="Details" asp-route-id="@choiceList.Id">
+                                                @choiceList.Name
+                                            </a>
+                                        </p>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </td>*@
