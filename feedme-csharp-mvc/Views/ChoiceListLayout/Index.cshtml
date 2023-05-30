@@ -6,7 +6,44 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<div class="row">
+<!-- Carousel -->
+<div id="choiceListCarousel" class="carousel col-7 bg-secondary slide container p-lg-5" data-bs-ride="carousel" style="vertical-align: middle;">
+
+  <!-- Indicators/dots -->
+@*  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="2"></button>
+  </div>*@
+  
+  <!-- The slideshow/carousel -->
+    <div class="carousel-inner container p-3" style="height: 600px">
+        @foreach(ChoiceListLayout listLayout in @Model)
+        {
+            <div class="carousel-item container-lg bg-secondary @(listLayout == Model[0] ? "active" : "")">
+                <div class="container p-5 mt-2 border border-dark bg-black bg-opacity-50 text-muted" style="height: 70px">
+                    <h4>@listLayout.Name</h4>
+                </div>
+                <div class="container p-5 mt-2 border border-dark bg-dark bg-opacity-75 text-muted" style="height: 330px">
+                    <p>@listLayout.Description</p>
+                </div>
+                <div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75">
+                    <a asp-controller="ChoiceListLayout" asp-action="Details" asp-route-id="@listLayout.Id"style="height: 40px">Details</a>
+                </div>
+            </div>
+        }
+    </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+@*<div class="row">
     @foreach(ChoiceListLayout listLayout in @Model)
     {
         <div class="col-3 offset-1 card">
@@ -18,4 +55,4 @@
         </div>
 
     }
-</div>
+</div>*@
