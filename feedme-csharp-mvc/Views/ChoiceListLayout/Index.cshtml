@@ -6,72 +6,16 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<div class="container">
-@foreach(ChoiceListLayout listLayout in @Model)
-{
-    <div class="col-3">
-        <table class="table-bordered table-hover">
-            <tr>
-                <th>@listLayout.Name</th>
-            </tr>
-            <tr>
-                <td>@listLayout.Description</td>
-            </tr>
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@listLayout.Id">Details</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <br />
-}
+<div class="row">
+    @foreach(ChoiceListLayout listLayout in @Model)
+    {
+        <div class="col-3 offset-1 card">
+            <div class="card-body">
+                <h4 class="card-title">@listLayout.Name</h4>
+                <p class="card-text">@listLayout.Description</p>
+                <a asp-action="Details" asp-route-id="@listLayout.Id" class="card-link">Details</a>
+            </div>
+        </div>
+
+    }
 </div>
-
-@*<h2>Your Layouts</h2>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<div class="col-4">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name: </th>
-                <th>Description: </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(ChoiceListLayout listLayout in @Model)
-            {
-                <tr>
-                    <td>@listLayout.Name</td>
-                    <td>@listLayout.Description</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@listLayout.Id">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>*@
-
-
-
-@*                    <td>
-                        <ul>
-                            @if (listLayout.ChoiceLists != null && listLayout.ChoiceLists.Count > 0)
-                            {
-                                @foreach (ChoiceList choiceList in listLayout.ChoiceLists)
-                                {
-                                    <li>
-                                        <p>
-                                            <a asp-controller="ChoiceLists" asp-action="Details" asp-route-id="@choiceList.Id">
-                                                @choiceList.Name
-                                            </a>
-                                        </p>
-                                    </li>
-                                }
-                            }
-                        </ul>
-                    </td>*@
