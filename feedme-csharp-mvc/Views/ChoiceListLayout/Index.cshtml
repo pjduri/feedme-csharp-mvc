@@ -1,14 +1,14 @@
-﻿@using feedme_csharp_mvc.Models
-@model List<ChoiceListLayout>
+﻿@using feedme_csharp_mvc.ViewModels
+@model FeedMeNowViewModel
 
-<h2>Your Layouts</h2>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 
 <!-- Carousel -->
-<div id="choiceListCarousel" class="carousel col-7 bg-secondary slide container p-lg-5" data-bs-ride="carousel" style="vertical-align: middle;">
-
+<div id="choiceListCarousel" class="carousel col-7 bg-secondary slide container p-lg-5 shadow-lg" data-bs-ride="carousel" style="vertical-align: middle;">
+    <h2 class="text-center">Your Layouts</h2>
+<p>
+    <a asp-action="Create" class="btn btn-outline-dark text-black text-opacity-75 col-md-4 offset-4 shadow-lg">Create New</a>
+</p>
   <!-- Indicators/dots -->
 @*  <div class="carousel-indicators">
     <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="0" class="active"></button>
@@ -17,7 +17,7 @@
   </div>*@
   
   <!-- The slideshow/carousel -->
-    <div class="carousel-inner container p-3" style="height: 600px">
+@*    <div class="carousel-inner container p-3" style="height: 600px">
         @foreach(ChoiceListLayout listLayout in @Model)
         {
             <div class="carousel-item container-lg bg-secondary @(listLayout == Model[0] ? "active" : "")">
@@ -32,6 +32,14 @@
                 </div>
             </div>
         }
+    </div>*@
+    <div class="carousel-inner container p-3" style="height: 560px">
+        @foreach(ListLayoutDetailViewModel viewModel in @Model.ListLayouts)
+        {
+            <div class="carousel-item container-lg bg-secondary @(viewModel == Model.ListLayouts[0] ? "active" : "")">
+                @await Html.PartialAsync("_ListLayoutDetailsPartial", viewModel)
+            </div>
+        }
     </div>
   
   <!-- Left and right controls/icons -->
@@ -42,17 +50,3 @@
     <span class="carousel-control-next-icon"></span>
   </button>
 </div>
-
-@*<div class="row">
-    @foreach(ChoiceListLayout listLayout in @Model)
-    {
-        <div class="col-3 offset-1 card">
-            <div class="card-body">
-                <h4 class="card-title">@listLayout.Name</h4>
-                <p class="card-text">@listLayout.Description</p>
-                <a asp-action="Details" asp-route-id="@listLayout.Id" class="card-link">Details</a>
-            </div>
-        </div>
-
-    }
-</div>*@

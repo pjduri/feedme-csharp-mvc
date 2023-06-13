@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using feedme_csharp_mvc.ViewModels
+@model ListLayoutDetailViewModel
+
+<div class="container border border-dark bg-black bg-opacity-50 text-muted shadow-lg" style="height: 70px">
+    <h4 class="text-lg-center pt-2 mt-2">@Model.Name</h4>
+</div>
+<div id="choicelists" class="container p-5 mt-2 border border-dark bg-dark bg-opacity-50 text-muted shadow-lg" 
+style="height: 330px;">
+    <p>@Model.Description</p>
+    @if(Model.ChoiceLists != null && Model.ChoiceLists.Count > 0) 
+    {
+    <div class="overflow-auto"
+    style="height: 200px;">
+    @foreach(ChoiceList choiceList in Model.ChoiceLists) 
+    {
+        <div class="m-4 d-grid gap-2 bg-dark bg-opacity-75 shadow-lg">
+            <a asp-controller="ChoiceLists" asp-action="Details" asp-route-id="@choiceList.Id" 
+                class="text-white-50 btn btn-outline-secondary">
+                @choiceList.Name
+            </a>
+        </div>
+    }
+    </div>
+}
+</div>
+<div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75 shadow-lg">
+    <a asp-controller="ChoiceLists" asp-action="Create" class="btn btn-outline-secondary text-white-50 d-grid gap-1">Add more lists</a>
+</div>

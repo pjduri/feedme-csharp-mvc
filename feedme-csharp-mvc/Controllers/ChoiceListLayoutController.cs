@@ -17,9 +17,19 @@ namespace feedme_csharp_mvc.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            return _context.ChoiceListLayouts != null ?
-                        View(await _context.ChoiceListLayouts.ToListAsync()) :
-                        Problem("Entity set 'FeedMeDbContext.ChoiceListLayouts'  is null.");
+            if (_context.ChoiceListLayouts is null)
+            {
+                return NotFound();
+            }
+
+            List<ChoiceListLayout> listLayouts = await _context.ChoiceListLayouts.Include(c => c.ChoiceLists).ToListAsync();
+
+            FeedMeNowViewModel feedMeNowViewModel = new FeedMeNowViewModel(listLayouts);
+
+            return View(feedMeNowViewModel);
+            //return _context.ChoiceListLayouts != null ?
+            //            View(await _context.ChoiceListLayouts.ToListAsync()) :
+            //            Problem("Entity set 'FeedMeDbContext.ChoiceListLayouts'  is null.");
         }
 
         public IActionResult Create()
@@ -116,6 +126,27 @@ namespace feedme_csharp_mvc.Controllers
             ListLayoutDetailViewModel viewModel = new ListLayoutDetailViewModel(listLayout);
 
             return View(viewModel);
+        }
+        
+        public IActionResult DetailsPartial(int? id)
+        {
+            if (id == null || _context.ChoiceListLayouts == null)
+            {
+                return NotFound();
+            }
+
+            ChoiceListLayout? listLayout = _context.ChoiceListLayouts
+                .Include(cll => cll.ChoiceLists)
+                .FirstOrDefault(ll => ll.Id == id);
+
+            if (listLayout == null)
+            {
+                return NotFound();
+            }
+
+            ListLayoutDetailViewModel viewModel = new ListLayoutDetailViewModel(listLayout);
+
+            return PartialView("_ListLayoutDetailsPartial", viewModel);
         }
     }
 }

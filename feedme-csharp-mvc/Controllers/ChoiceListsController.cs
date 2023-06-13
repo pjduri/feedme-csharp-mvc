@@ -249,13 +249,19 @@ namespace feedme_csharp_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ChoiceLists == null)
+            if (_context.ChoiceLists == null || _context.Options == null)
             {
                 return Problem("Entity set 'FeedMeDbContext.choiceLists'  is null.");
             }
-            var choiceList = await _context.ChoiceLists.FindAsync(id);
+
+            ChoiceList choiceList = await _context.ChoiceLists.FindAsync(id);
             if (choiceList != null)
             {
+                List<ListOption> options = await _context.Options.Where(o => o.ChoiceListId == choiceList.Id).ToListAsync();
+                foreach (ListOption option in options)
+                {
+                    _context.Options.Remove(option);
+                }
                 _context.ChoiceLists.Remove(choiceList);
             }
             
