@@ -15,7 +15,7 @@
             </li>
         }
         <li>
-            <a asp-action="Create" class="btn btn-outline-dark text-black text-opacity-75 col-md-4 offset-4 shadow-lg">Create New</a>
+            <a asp-action="Create" class="dropdown-item">Create New</a>
         </li>
     </ul>
 </div>
@@ -87,7 +87,8 @@ style="height: 330px;">
                             <div class="card-footer">
                                 <a class="card-link" asp-controller="ListOptions" asp-action="Create">Add More</a>
                                 <a class="card-link" asp-action="Edit" asp-route-id="@list?.ChoiceListId">Edit</a>
-                                <a class="card-link" asp-action="Index">Back to List</a><hr />
+                                <hr />
+                                @*<a class="card-link" asp-action="Index">Back to List</a><hr />*@
                                 <button id="randomOptionButton" class="btn btn-outline-dark shadow-lg">
                                     Pick Me Something!
                                 </button>
@@ -121,7 +122,7 @@ style="height: 330px;">
 </div>
 
 
-@*<script>
+<script>
   const button = document.getElementById('randomOptionButton')
   const clearButton = document.getElementById('clearButton')
   const container = document.getElementById('randomOptionContainer')
@@ -130,9 +131,14 @@ style="height: 330px;">
   const lists = JSON.parse(listsJson)
   console.log(lists)
   const options = {}
-  for(let i=0; i<lists.length; i++) {
-      options.
+  for (let i=0; i<lists.length; i++) {
+    if (!options.hasOwnProperty(lists[i].choiceListId)) {
+        options[lists[i].choiceListId] = lists[i].optionNames
+    } else {
+        lists[i].optionNames.map(o => {options[lists[i].choiceListId].push(o)})
+    }
   }
+  console.log(options)
   let randomOption
   clearButton.hidden = true
 
@@ -148,7 +154,7 @@ style="height: 330px;">
       container.textContent = randomOption
       clearButton.hidden = true
   })
-</script>*@
+</script>
 
 
 
