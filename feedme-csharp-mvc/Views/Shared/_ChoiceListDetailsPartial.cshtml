@@ -8,15 +8,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="card">
+    <h3 class="card-header">@Model.ChoiceListName</h3>
+    <div class="card-body">
+        <h4>@Model.ChoiceListDescription</h4>
+        @if (Model.OptionNames != null && Model.OptionNames.Count > 0)
+        {
+            @foreach (string option in Model.OptionNames)
+            {
+                <h6>@option</h6>
+            }
+        }
+    </div>
+    <div class="card-footer">
+        <a class="card-link" asp-controller="ListOptions" asp-action="Create">Add More</a>
+        <a class="card-link" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
+        <a class="card-link" asp-action="Index">Back to List</a><hr />
+        <button id="randomOptionButton" class="btn btn-outline-dark shadow-lg">Pick Me Something!</button>
+        <button id="clearButton" class="btn btn-outline-dark shadow-lg">Clear</button>
+        <div id="randomOptionContainer"></div>
+    </div>
+</div>
 
-<div>
+@*<div>
     <h4>@Model.ChoiceListName</h4>
     <table class="table">
-@*    <tr>
-        <th>Name</th>
-        <td>@Model.ChoiceListName</td>
-    </tr>*@
     <tr>
         <th>Description</th>
         <td>@Model.ChoiceListDescription</td>
@@ -44,9 +60,9 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-<button id="randomOptionButton">Pick Me Something!</button>
-<button id="clearButton">Clear</button>
-<div id="randomOptionContainer"></div>
+<button id="randomOptionButton" class="btn btn-outline-dark shadow-lg">Pick Me Something!</button>
+<button id="clearButton" class="btn btn-outline-dark shadow-lg">Clear</button>
+<div id="randomOptionContainer"></div>*@
 
 <script>
   const button = document.getElementById('randomOptionButton')

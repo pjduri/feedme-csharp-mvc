@@ -1,11 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-@using feedme_csharp_mvc.ViewModels
+﻿@using feedme_csharp_mvc.ViewModels
 @model ListLayoutDetailViewModel
+
+<select>
+    @if (Model.AllLayouts is not null)
+    {
+        @foreach (ChoiceListLayout listLayout in Model.AllLayouts)
+        {
+            <option>
+                <a asp-controller="ChoiceListLayout" asp-action="Details" asp-route-id="@listLayout.Id"></a>
+            </option>
+        }
+
+    }
+</select>
 
 <div class="container border border-dark bg-black bg-opacity-50 text-muted shadow-lg" style="height: 70px">
     <h4 class="text-lg-center pt-2 mt-2">@Model.Name</h4>
@@ -30,5 +37,6 @@ style="height: 330px;">
 }
 </div>
 <div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75 shadow-lg">
-    <a asp-controller="ChoiceLists" asp-action="Create" class="btn btn-outline-secondary text-white-50 d-grid gap-1">Add more lists</a>
+    <a asp-controller="ChoiceLists" asp-action="Create" class="btn btn-outline-secondary text-white-50 d-grid gap-1">Add more lists</a><br />
+    <a asp-controller="ChoiceListLayout" asp-action="Details" asp-route-id="@Model.ChoiceListLayoutId" class="btn btn-outline-secondary text-white-50 d-grid gap-1">Details</a>
 </div>
