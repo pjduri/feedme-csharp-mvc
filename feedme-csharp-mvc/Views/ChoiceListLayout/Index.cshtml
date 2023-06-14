@@ -1,24 +1,7 @@
 ﻿@using feedme_csharp_mvc.ViewModels
 @model ListLayoutDetailViewModel
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Select Layout
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        @foreach (ChoiceListLayout listLayout in Model.AllLayouts)
-        {
-            <li>
-                <a class="dropdown-item" asp-controller="ChoiceListLayout" asp-action="Index" asp-route-id="@listLayout.Id">
-                    @listLayout.Name
-                </a>
-            </li>
-        }
-        <li>
-            <a asp-action="Create" class="dropdown-item">Create New</a>
-        </li>
-    </ul>
-</div>
+
 
 @*<div class="container border border-dark bg-black bg-opacity-50 text-muted shadow-lg" style="height: 70px">
     <h4 class="text-lg-center pt-2 mt-2">@Model.Name</h4>
@@ -45,7 +28,31 @@ style="height: 330px;">
 
 <!-- Carousel -->
 <div id="choiceListCarousel" class="carousel col-7 bg-secondary slide container p-lg-5 shadow-lg" data-bs-ride="carousel" style="vertical-align: middle;">
- <h2 class="text-center">@Model.Name</h2>
+    <div class="row">
+        <div class="dropdown col-4 offset-8">
+            <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Layout
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            @foreach (ChoiceListLayout listLayout in Model.AllLayouts)
+            {
+                    <li>
+                        <a class="dropdown-item" 
+                            asp-controller="ChoiceListLayout" 
+                            asp-action="Index" 
+                            asp-route-id="@listLayout.Id">
+                        @listLayout.Name
+                        </a>
+                    </li>
+                }
+                <li>
+                    <a asp-action="Create" class="dropdown-item">Create New</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h2 class="text-center">@Model.Name</h2>
+ 
  @*<div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75 shadow-lg">*@
     <a asp-controller="ChoiceLists" asp-action="Create" 
         class="btn btn-outline-dark text-white-50 col-4 offset-4">
@@ -63,7 +70,7 @@ style="height: 330px;">
   </div>*@
   
   <!-- The slideshow/carousel -->
-    <div class="carousel-inner container p-3" style="height: 600px">
+    <div class="carousel-inner container p-3" style="height: 400px">
         @foreach(ChoiceListDetailViewModel list in @Model.DetailViewModels)
         {
             <div class="carousel-item container-lg bg-secondary @(list == Model.DetailViewModels[0] ? "active" : "")">
@@ -72,9 +79,9 @@ style="height: 330px;">
                 </div>
                 <div class="container p-5 mt-2 border border-dark bg-dark bg-opacity-75 text-muted" style="height: 330px">
                     <p>@list.ChoiceListDescription</p>*@
-                    <div class="card">
-                        <h3 class="card-header">@list.ChoiceListName</h3>
-                        <div class="card-body">
+                    <div class="card border-dark shadow-lg">
+                        <h3 class="card-header bg-dark text-secondary">@list.ChoiceListName</h3>
+                        <div class="card-body bg-secondary">
                             <h4>@list.ChoiceListDescription</h4>
                             @if (list.OptionNames != null && list.OptionNames.Count > 0)
                             {
@@ -84,7 +91,7 @@ style="height: 330px;">
                                 }
                             }
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer bg-dark bg-opacity-75">
                                 <a class="card-link" asp-controller="ListOptions" asp-action="Create">Add More</a>
                                 <a class="card-link" asp-action="Edit" asp-route-id="@list?.ChoiceListId">Edit</a>
                                 <hr />
@@ -98,7 +105,7 @@ style="height: 330px;">
                     </div>
 @*                </div>*@
                 <div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75">
-                    <a asp-controller="ChoiceList" asp-action="Details" asp-route-id="@list.ChoiceListId"style="height: 40px">Details</a>
+                    <a asp-controller="ChoiceLists" asp-action="Details" asp-route-id="@list.ChoiceListId"style="height: 40px">Details</a>
                 </div>
             </div>
         }
