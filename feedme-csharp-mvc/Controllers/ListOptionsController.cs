@@ -24,19 +24,19 @@ namespace feedme_csharp_mvc.Controllers
         // GET: ListOptions
         public async Task<IActionResult> Index()
         {
-            var feedMeDbContext = _context.options.Include(l => l.ChoiceList);
+            var feedMeDbContext = _context.Options.Include(l => l.ChoiceList);
             return View(await feedMeDbContext.ToListAsync());
         }
 
         // GET: ListOptions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.options == null)
+            if (id == null || _context.Options == null)
             {
                 return NotFound();
             }
 
-            var listOption = await _context.options
+            var listOption = await _context.Options
                 .Include(l => l.ChoiceList)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (listOption == null)
@@ -51,7 +51,7 @@ namespace feedme_csharp_mvc.Controllers
         public IActionResult Create()
         {
             //ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id");
-            AddOptionViewModel addOptionViewModel = new AddOptionViewModel(_context.choiceLists.ToList());
+            AddOptionViewModel addOptionViewModel = new AddOptionViewModel(_context.ChoiceLists.ToList());
             return View(addOptionViewModel);
         }
 
@@ -64,7 +64,7 @@ namespace feedme_csharp_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                ChoiceList? theChoiceList = await _context.choiceLists.FindAsync(addOptionViewModel.ChoiceListId);
+                ChoiceList? theChoiceList = await _context.ChoiceLists.FindAsync(addOptionViewModel.ChoiceListId);
                 ListOption listOption = new ListOption
                 {
                     Name = addOptionViewModel.Name,
@@ -74,28 +74,28 @@ namespace feedme_csharp_mvc.Controllers
                 theChoiceList.Options ??= new List<ListOption>();
 
                 theChoiceList.Options.Add(listOption);
-                _context.options.Add(listOption);
+                _context.Options.Add(listOption);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id", addOptionViewModel.ChoiceListId);
+            ViewData["ChoiceListId"] = new SelectList(_context.ChoiceLists, "Id", "Id", addOptionViewModel.ChoiceListId);
             return View(addOptionViewModel);
         }
 
         // GET: ListOptions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.options == null)
+            if (id == null || _context.Options == null)
             {
                 return NotFound();
             }
 
-            var listOption = await _context.options.FindAsync(id);
+            var listOption = await _context.Options.FindAsync(id);
             if (listOption == null)
             {
                 return NotFound();
             }
-            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id", listOption.ChoiceListId);
+            ViewData["ChoiceListId"] = new SelectList(_context.ChoiceLists, "Id", "Id", listOption.ChoiceListId);
             return View(listOption);
         }
 
@@ -131,19 +131,19 @@ namespace feedme_csharp_mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ChoiceListId"] = new SelectList(_context.choiceLists, "Id", "Id", listOption.ChoiceListId);
+            ViewData["ChoiceListId"] = new SelectList(_context.ChoiceLists, "Id", "Id", listOption.ChoiceListId);
             return View(listOption);
         }
 
         // GET: ListOptions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.options == null)
+            if (id == null || _context.Options == null)
             {
                 return NotFound();
             }
 
-            var listOption = await _context.options
+            var listOption = await _context.Options
                 .Include(l => l.ChoiceList)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (listOption == null)
@@ -159,14 +159,14 @@ namespace feedme_csharp_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.options == null)
+            if (_context.Options == null)
             {
                 return Problem("Entity set 'FeedMeDbContext.options'  is null.");
             }
-            var listOption = await _context.options.FindAsync(id);
+            var listOption = await _context.Options.FindAsync(id);
             if (listOption != null)
             {
-                _context.options.Remove(listOption);
+                _context.Options.Remove(listOption);
             }
             
             await _context.SaveChangesAsync();
@@ -175,7 +175,7 @@ namespace feedme_csharp_mvc.Controllers
 
         private bool ListOptionExists(int id)
         {
-          return (_context.options?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Options?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

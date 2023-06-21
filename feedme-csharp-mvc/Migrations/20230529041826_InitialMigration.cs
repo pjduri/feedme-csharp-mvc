@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace feedme_csharp_mvc.Migrations
 {
-    public partial class NotInitialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace feedme_csharp_mvc.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "choiceLists",
+                name: "ChoiceListLayouts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,7 +80,7 @@ namespace feedme_csharp_mvc.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_choiceLists", x => x.Id);
+                    table.PrimaryKey("PK_ChoiceListLayouts", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -212,24 +212,47 @@ namespace feedme_csharp_mvc.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "options",
+                name: "ChoiceLists",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ChoiceListId = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ChoiceListLayoutId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_options", x => x.Id);
+                    table.PrimaryKey("PK_ChoiceLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_options_choiceLists_ChoiceListId",
-                        column: x => x.ChoiceListId,
-                        principalTable: "choiceLists",
+                        name: "FK_ChoiceLists_ChoiceListLayouts_ChoiceListLayoutId",
+                        column: x => x.ChoiceListLayoutId,
+                        principalTable: "ChoiceListLayouts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ChoiceListId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Options_ChoiceLists_ChoiceListId",
+                        column: x => x.ChoiceListId,
+                        principalTable: "ChoiceLists",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -271,8 +294,13 @@ namespace feedme_csharp_mvc.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_options_ChoiceListId",
-                table: "options",
+                name: "IX_ChoiceLists_ChoiceListLayoutId",
+                table: "ChoiceLists",
+                column: "ChoiceListLayoutId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Options_ChoiceListId",
+                table: "Options",
                 column: "ChoiceListId");
         }
 
@@ -294,7 +322,7 @@ namespace feedme_csharp_mvc.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "options");
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -303,7 +331,10 @@ namespace feedme_csharp_mvc.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "choiceLists");
+                name: "ChoiceLists");
+
+            migrationBuilder.DropTable(
+                name: "ChoiceListLayouts");
         }
     }
 }

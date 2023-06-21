@@ -1,0 +1,93 @@
+﻿@model feedme_csharp_mvc.ViewModels.AddChoiceListLayoutViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Create a new layout</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+@*            <h3>First List: </h3>
+            <card>
+                <div class="form-group">
+                    <label asp-for="List1Name" class="control-label">Name: </label>
+                    <input asp-for="List1Name" class="form-control" />
+                    <span asp-validation-for="List1Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="List1Description" class="control-label">Description: </label>
+                    <input asp-for="List1Description" class="form-control" />
+                    <span asp-validation-for="List1Description" class="text-danger"></span>
+                </div>
+                <div>
+                    <card>
+                        <h5>Options: </h5>
+                        <div class="form-group">
+                            <label asp-for="List1Option1Name" class="control-label">Name: </label>
+                            <input asp-for="List1Option1Name" class="form-control" />
+                            <span asp-validation-for="List1Option1Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="List1Option2Name" class="control-label">Name: </label>
+                            <input asp-for="List1Option2Name" class="form-control" />
+                            <span asp-validation-for="List1Option2Name" class="text-danger"></span>
+                        </div>
+                    </card>
+                </div>
+            </card>
+            <card>
+                <h3>Second List: </h3>
+                <div class="form-group">
+                    <label asp-for="List2Name" class="control-label">Name: </label>
+                    <input asp-for="List2Name" class="form-control" />
+                    <span asp-validation-for="List2Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="List2Description" class="control-label">Description: </label>
+                    <input asp-for="List2Description" class="form-control" />
+                    <span asp-validation-for="List2Description" class="text-danger"></span>
+                </div>
+                <div>
+                    <card>
+                        <h5>Options: </h5>
+                        <div class="form-group">
+                            <label asp-for="List2Option1Name" class="control-label">Name: </label>
+                            <input asp-for="List2Option1Name" class="form-control" />
+                            <span asp-validation-for="List2Option1Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="List2Option2Name" class="control-label">Name: </label>
+                            <input asp-for="List2Option2Name" class="form-control" />
+                            <span asp-validation-for="List2Option2Name" class="text-danger"></span>
+                        </div>
+                    </card>
+                </div>
+            </card>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

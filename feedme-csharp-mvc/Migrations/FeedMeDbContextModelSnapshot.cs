@@ -25,6 +25,9 @@ namespace feedme_csharp_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("ChoiceListLayoutId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
@@ -33,7 +36,26 @@ namespace feedme_csharp_mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("choiceLists");
+                    b.HasIndex("ChoiceListLayoutId");
+
+                    b.ToTable("ChoiceLists");
+                });
+
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ChoiceListLayout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChoiceListLayouts");
                 });
 
             modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
@@ -42,7 +64,7 @@ namespace feedme_csharp_mvc.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ChoiceListId")
+                    b.Property<int?>("ChoiceListId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -52,7 +74,7 @@ namespace feedme_csharp_mvc.Migrations
 
                     b.HasIndex("ChoiceListId");
 
-                    b.ToTable("options");
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -251,13 +273,22 @@ namespace feedme_csharp_mvc.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ChoiceList", b =>
+                {
+                    b.HasOne("feedme_csharp_mvc.Models.ChoiceListLayout", "ChoiceListLayout")
+                        .WithMany("ChoiceLists")
+                        .HasForeignKey("ChoiceListLayoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ChoiceListLayout");
+                });
+
             modelBuilder.Entity("feedme_csharp_mvc.Models.ListOption", b =>
                 {
                     b.HasOne("feedme_csharp_mvc.Models.ChoiceList", "ChoiceList")
                         .WithMany("Options")
-                        .HasForeignKey("ChoiceListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChoiceListId");
 
                     b.Navigation("ChoiceList");
                 });
@@ -316,6 +347,11 @@ namespace feedme_csharp_mvc.Migrations
             modelBuilder.Entity("feedme_csharp_mvc.Models.ChoiceList", b =>
                 {
                     b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("feedme_csharp_mvc.Models.ChoiceListLayout", b =>
+                {
+                    b.Navigation("ChoiceLists");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,167 @@
+﻿@using feedme_csharp_mvc.ViewModels
+@model ListLayoutDetailViewModel
+
+<!-- Carousel -->
+<div id="choiceListCarousel" class="carousel col-8 bg-transparent slide container shadow-lg" data-bs-ride="carousel" style="vertical-align: middle;">
+    <div class="container d-flex flex-row align-items-center">
+        <h1 style="font-size: 70px;" class="m-2">@Model.Name</h1>
+        <div class="dropdown col-4 mt-4">
+            <button class="btn btn-sm p-1 btn-dark text-muted dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
+            @foreach (ChoiceListLayout listLayout in Model.AllLayouts)
+            {
+                    <li>
+                        <a class="dropdown-item" 
+                            asp-controller="ChoiceListLayout" 
+                            asp-action="Index" 
+                            asp-route-id="@listLayout.Id">
+                        @listLayout.Name
+                        </a>
+                    </li>
+                }
+                <li>
+                    <a asp-action="Create" class="dropdown-item">Create New</a>
+                </li>
+            </ul>
+            <a asp-controller="ChoiceLists" asp-action="Create" 
+        class="btn btn-dark btn-sm text-white-50">
+        Add
+    </a>
+        </div>
+    </div>
+    
+ 
+ @*<div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75 shadow-lg">*@
+    
+  <!-- Indicators/dots -->
+@*  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="2"></button>
+  </div>*@
+  
+  <!-- The slideshow/carousel -->
+    <div class="carousel-inner container p-3 bg-transparent" style="height: 400px">
+        @foreach(ChoiceListDetailViewModel list in @Model.DetailViewModels)
+        {
+            <div class="carousel-item container-lg bg-transparent @(list == Model.DetailViewModels[0] ? "active" : "")">
+                    <div class="card border-dark shadow-lg">
+                       @await Html.PartialAsync("_ChoiceListDetailsPartial", list)
+                        <div id="@list.ChoiceListId" class="card-footer bg-dark">
+                        </div>
+                        
+                    </div>
+            </div>
+        }
+    </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+<script>
+  const choiceListsJson = '@Html.Raw(Json.Serialize(Model.DetailViewModels))'
+  const choiceLists = JSON.parse(choiceListsJson)
+
+  console.log(choiceLists)
+
+  for (let i=0; i<choiceLists.length; i++) {
+    const theChoiceList = choiceLists[i]
+    const choiceListId = theChoiceList.choiceListId
+    const buttonBlock = document.getElementById(theChoiceList.choiceListId)
+
+    theChoiceList.getRandomOption = () => theChoiceList.optionNames[Math.floor(Math.random() * theChoiceList.optionNames.length)]
+
+    buttonBlock.innerHTML += 
+    `<div class='justify-content-center btn-group-lg d-flex flex-row align-items-center'>
+    <button id='randomizer${choiceListId}'
+    class="btn btn-outline-secondary">
+        Pick Me Something!
+    </button>
+    <button id='clearButton${choiceListId}' class="btn btn-outline-secondary m-1">
+        Clear
+    </button>
+    <div class='m-1 text-dark btn btn-secondary' id='randomOption${choiceListId}'></div>
+    </div>`
+
+    const randomizer = document.getElementById(`randomizer${choiceListId}`)
+    const clearButton = document.getElementById(`clearButton${choiceListId}`)
+    const randomOption = document.getElementById(`randomOption${choiceListId}`)
+
+    clearButton.hidden = true
+    randomOption.hidden = true
+
+    randomizer.addEventListener('click', () => {
+        randomOption.innerHTML = theChoiceList.getRandomOption()
+        clearButton.hidden = false
+        randomOption.hidden = false
+    })
+
+    clearButton.addEventListener('click', () => {
+        randomOption.innerHTML = null
+        clearButton.hidden = true
+        randomOption.hidden = true
+    })
+  }
+</script>
+
+
+
+@*@using feedme_csharp_mvc.ViewModels
+@model FeedMeNowViewModel*@
+
+
+
+<!-- Carousel -->
+@*<div id="choiceListCarousel" class="carousel col-7 bg-secondary slide container p-lg-5 shadow-lg" data-bs-ride="carousel" style="vertical-align: middle;">
+    <h2 class="text-center">Your Layouts</h2>
+<p>
+    <a asp-action="Create" class="btn btn-outline-dark text-black text-opacity-75 col-md-4 offset-4 shadow-lg">Create New</a>
+</p>*@
+  <!-- Indicators/dots -->
+@*  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#choiceListCarousel" data-bs-slide-to="2"></button>
+  </div>*@
+  
+  <!-- The slideshow/carousel -->
+@*    <div class="carousel-inner container p-3" style="height: 600px">
+        @foreach(ChoiceListLayout listLayout in @Model)
+        {
+            <div class="carousel-item container-lg bg-secondary @(listLayout == Model[0] ? "active" : "")">
+                <div class="container p-5 mt-2 border border-dark bg-black bg-opacity-50 text-muted" style="height: 70px">
+                    <h4>@listLayout.Name</h4>
+                </div>
+                <div class="container p-5 mt-2 border border-dark bg-dark bg-opacity-75 text-muted" style="height: 330px">
+                    <p>@listLayout.Description</p>
+                </div>
+                <div class="container p-3 mt-2 border border-dark bg-black bg-opacity-75">
+                    <a asp-controller="ChoiceListLayout" asp-action="Details" asp-route-id="@listLayout.Id"style="height: 40px">Details</a>
+                </div>
+            </div>
+        }
+    </div>*@
+@*    <div class="carousel-inner container p-3" style="height: 560px">
+        @foreach(ListLayoutDetailViewModel viewModel in @Model.ListLayouts)
+        {
+            <div class="carousel-item container-lg bg-secondary @(viewModel == Model.ListLayouts[0] ? "active" : "")">
+                @await Html.PartialAsync("_ListLayoutDetailsPartial", viewModel)
+            </div>
+        }
+    </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#choiceListCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>*@

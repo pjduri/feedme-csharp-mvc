@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(var(--bs-secondary-rgb),var(--bs-bg-transparence)); /* Set the background color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)); /* Set the color of the scrollbar thumb */
+    border-radius: 30px;
+}
