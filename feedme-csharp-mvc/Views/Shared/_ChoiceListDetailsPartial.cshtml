@@ -3,20 +3,41 @@
 @using feedme_csharp_mvc.ViewModels
 @model ChoiceListDetailViewModel
 
-@{
+@*@{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 
-<h1>Details</h1>
+@*<div class="card">*@
+    <div class="card-header bg-dark text-secondary d-flex flex-row align-items-center">
+        <h2 class="offset-4">@Model.ChoiceListName</h2>
+        <a class="card-link m-2 btn btn-outline-secondary btn-sm" asp-controller="ChoiceLists" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
+        <a class="btn btn-outline-secondary btn-sm m-2 justify-content-end" asp-controller="ListOptions" asp-action="Create">Add Option</a>
+    </div>
+    <div class="card-body bg-secondary overflow-auto" style="height: 200px;">
+        <h3 class="text-center">@Model.ChoiceListDescription</h3>       
+        
+        @if (Model.OptionNames != null && Model.OptionNames.Count > 0)
+        {
+            @foreach (string option in Model.OptionNames)
+            {
+                <h6 class="text-center">@option</h6>
+            }
+        }
+    </div>
+@*    <div class="card-footer">
+        <a class="card-link" asp-controller="ListOptions" asp-action="Create">Add More</a>
+        <a class="card-link" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
+        <a class="card-link" asp-action="Index">Back to List</a><hr />
+        <button id="randomOptionButton" class="btn btn-outline-dark shadow-lg">Pick Me Something!</button>
+        <button id="clearButton" class="btn btn-outline-dark shadow-lg">Clear</button>
+        <div id="randomOptionContainer"></div>
+    </div>*@
+@*</div>*@
 
-<div>
+@*<div>
     <h4>@Model.ChoiceListName</h4>
     <table class="table">
-@*    <tr>
-        <th>Name</th>
-        <td>@Model.ChoiceListName</td>
-    </tr>*@
     <tr>
         <th>Description</th>
         <td>@Model.ChoiceListDescription</td>
@@ -44,11 +65,11 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-<button id="randomOptionButton">Pick Me Something!</button>
-<button id="clearButton">Clear</button>
-<div id="randomOptionContainer"></div>
+<button id="randomOptionButton" class="btn btn-outline-dark shadow-lg">Pick Me Something!</button>
+<button id="clearButton" class="btn btn-outline-dark shadow-lg">Clear</button>
+<div id="randomOptionContainer"></div>*@
 
-<script>
+@*<script>
   const button = document.getElementById('randomOptionButton')
   const clearButton = document.getElementById('clearButton')
   const container = document.getElementById('randomOptionContainer')
@@ -69,4 +90,4 @@
       container.textContent = randomOption
       clearButton.hidden = true
   })
-</script>
+</script>*@
