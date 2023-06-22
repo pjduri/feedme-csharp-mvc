@@ -111,7 +111,7 @@ namespace feedme_csharp_mvc.Controllers
                 _context.ChoiceLists.Add(choiceList);
                 await _context.SaveChangesAsync();
                 //return Json(new { success = true });
-                return Redirect("Index");
+                return Redirect("~/ChoiceListLayout");
             }
             //return NoContent();
             return View(addChoiceListViewModel);
@@ -266,7 +266,8 @@ namespace feedme_csharp_mvc.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return Redirect("~/ChoiceListLayout");
         }
 
         private bool ChoiceListExists(int id)

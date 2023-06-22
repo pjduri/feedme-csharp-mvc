@@ -9,22 +9,37 @@
 }*@
 
 @*<div class="card">*@
-    <div class="card-header bg-dark text-secondary d-flex flex-row align-items-center">
-        <h2 class="offset-4">@Model.ChoiceListName</h2>
-        <a class="card-link m-2 btn btn-outline-secondary btn-sm" asp-controller="ChoiceLists" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
-        <a class="btn btn-outline-secondary btn-sm m-2 justify-content-end" asp-controller="ListOptions" asp-action="Create">Add Option</a>
+<div class="container-fluid card-header bg-dark bg-gradient text-secondary d-flex flex-row align-items-center">
+    <h2 class="col-10">@Model.ChoiceListName</h2>
+    <div class="btn-group-vertical col-2">
+        <form class="btn btn-outline-secondary btn-sm">
+            <a asp-controller="ChoiceLists" asp-action="Create" class="btn btn-outline-secondary btn-sm bg-transparent border-0">
+                Add
+            </a>
+        </form>
+        <form class="btn btn-outline-secondary btn-sm">
+            <a class="btn btn-outline-secondary btn-sm bg-transparent border-0" asp-controller="ChoiceLists" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
+        </form>
+        @*<a class="btn btn-outline-secondary btn-sm m-1 col-2" asp-controller="ChoiceLists" asp-action="Delete" asp-route-id="@Model.ChoiceListId" method="post">Delete</a>*@
+        <form asp-controller="ChoiceLists" asp-action="Delete" asp-route-id="@Model?.ChoiceListId" method="post" class="btn btn-sm btn-outline-secondary">
+            <input type="submit" value="Delete" class="btn btn-sm btn-outline-secondary bg-transparent border-0" />
+        </form>
     </div>
-    <div class="card-body bg-secondary overflow-auto" style="height: 200px;">
-        <h3 class="text-center">@Model.ChoiceListDescription</h3>       
-        
-        @if (Model.OptionNames != null && Model.OptionNames.Count > 0)
+</div>
+<div class="card-body bg-secondary overflow-auto" style="height: 200px;">
+    <h3 class="text-center">@Model.ChoiceListDescription</h3>
+
+    @if (Model.OptionNames != null && Model.OptionNames.Count > 0)
+    {
+        @foreach (string option in Model.OptionNames)
         {
-            @foreach (string option in Model.OptionNames)
-            {
-                <h6 class="text-center">@option</h6>
-            }
+            <h5 class="text-center">@option</h5>
         }
-    </div>
+        <p class="text-center">
+            <a class="btn btn-outline-dark btn-sm m-1" asp-controller="ListOptions" asp-action="Create">Add</a>
+        </p>
+    }
+</div>
 @*    <div class="card-footer">
         <a class="card-link" asp-controller="ListOptions" asp-action="Create">Add More</a>
         <a class="card-link" asp-action="Edit" asp-route-id="@Model?.ChoiceListId">Edit</a>
@@ -45,7 +60,7 @@
     <tr>
         <th>Options</th>
         <td>
-        @if (Model.OptionNames != null && Model.OptionNames.Count > 0) 
+        @if (Model.OptionNames != null && Model.OptionNames.Count > 0)
         {
             <ul>
             @foreach (string option in Model.OptionNames)
